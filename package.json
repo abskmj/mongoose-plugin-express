@@ -1,0 +1,26 @@
+{
+  "name": "@abskmj/mongoose-plugin-express",
+  "version": "1.0.0",
+  "description": "Mongoose plugin to mount express routers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abskmj/mongoose-plugin-express.git"
+  },
+  "keywords": [
+    "express",
+    "router",
+    "api"
+  ],
+  "author": "abskmj@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "@abskmj/query": "github:abskmj/query#4595e115f5090b211254111ce2e4c5bd5750a707"
+  },
+  "peerDependencies": {
+    "express": "x"
+  }
+}
