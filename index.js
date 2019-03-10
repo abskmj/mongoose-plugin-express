@@ -3,22 +3,8 @@ const query = require('@abskmj/query');
 
 module.exports = (schema, options) => {
 
-    schema.statics._router = express.Router();
-
-    schema.statics.attachRouter = function(router) {
-        this._router.use(router);
-    }
-
-    schema.statics.getRouter = function() {
-        let router = new express.Router();
-
-
-        // attach model to request
-        router.use((req, res, nxt) => {
-            req.model = this;
-
-            nxt();
-        });
+    let getRouter = function() {
+        let router = express.Router();
 
         // process query parameters
         router.use((req, res, nxt) => {
@@ -31,13 +17,33 @@ module.exports = (schema, options) => {
 
                 req.query = json;
             }
-            
+
             nxt();
 
         });
 
-        router.use(this._router);
+        let instance = function() {
+            let modelRouter = express.Router();
 
-        return router;
+            // attach model to request
+            modelRouter.use((req, res, nxt) => {
+                req.model = this;
+
+                nxt();
+            });
+
+            modelRouter.use(router);
+
+            return modelRouter;
+        }
+
+        instance.attach = function(r) {
+            router.use(r);
+        }
+
+        return instance;
     }
+
+
+    schema.static('router', getRouter());
 }
