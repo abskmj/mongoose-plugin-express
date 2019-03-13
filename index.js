@@ -2,6 +2,17 @@ const express = require('express');
 const query = require('@abskmj/query');
 
 module.exports = (schema, options) => {
+    
+    let Pluggable = (disable = []) => {
+        return (slug, route) => {
+            if (disable.includes(slug)) {
+                return (req, res, nxt) => nxt();
+            }
+            else {
+                return route;
+            }
+        }
+    }
 
     let getRouter = function() {
         let router = express.Router();
@@ -25,7 +36,7 @@ module.exports = (schema, options) => {
         // attach http errors if not already
         router.use((req, res, nxt) => {
             req.errors = req.errors || require('@abskmj/http-errors');
-            
+
             nxt();
         });
 
@@ -47,6 +58,8 @@ module.exports = (schema, options) => {
         instance.attach = function(r) {
             router.use(r);
         }
+        
+        instance.Pluggable = Pluggable;
 
         return instance;
     }
