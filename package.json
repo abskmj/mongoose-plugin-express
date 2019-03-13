@@ -21,6 +21,9 @@
     "@abskmj/query": "github:abskmj/query#4595e115f5090b211254111ce2e4c5bd5750a707"
   },
   "peerDependencies": {
-    "express": "x"
+    "express": "^4.0.0"
+  },
+  "optionalDependencies": {
+    "@abskmj/http-errors": "github:abskmj/http-errors"
   }
 }

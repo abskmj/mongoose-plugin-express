@@ -22,6 +22,13 @@ module.exports = (schema, options) => {
 
         });
 
+        // attach http errors if not already
+        router.use((req, res, nxt) => {
+            req.errors = req.errors || require('@abskmj/http-errors');
+            
+            nxt();
+        });
+
         let instance = function() {
             let modelRouter = express.Router();
 
